@@ -1,4 +1,4 @@
-package com.lightcycles.online;
+package com.lightcycles.online.Client;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
@@ -14,15 +14,17 @@ public class Client
 	SocketHints shints;
 	Socket socket;
 
-	public Client()
+	public Client(boolean isPlayer)
 	{
-		isPlayer = true;
+		this.isPlayer = isPlayer;
 
 		shints = new SocketHints();
-		socket = Gdx.net.newClientSocket(Net.Protocol.TCP, "localhost", 17892, shints);
+		socket = Gdx.net.newClientSocket(Net.Protocol.TCP, "localhost", 17893, shints);
 
 		try {
-			socket.getOutputStream().write("player".getBytes());
+			while(true) {
+				socket.getOutputStream().write((isPlayer ? "player\n" : "better\n").getBytes());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
