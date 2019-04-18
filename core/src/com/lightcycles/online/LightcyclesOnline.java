@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class LightcyclesOnline extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
