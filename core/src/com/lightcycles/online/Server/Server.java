@@ -6,6 +6,8 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
+import com.lightcycles.online.Game.LightcycleGameSimulation;
+import com.lightcycles.online.Game.LightcyclesGame;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 
 public class Server
 {
+	final LightcyclesGame game;
+
 	ServerSocketHints sshints;
 	ServerSocket ssocket;
 	ArrayList<Socket> clientPlayerSockets = new ArrayList<>();
@@ -24,8 +28,10 @@ public class Server
 	int totalBetters;
 	int totalConnections;
 
-	public Server()
+	public Server(LightcyclesGame game)
 	{
+		this.game = game;
+
 		sshints = new ServerSocketHints(); //server socket properties
 		sshints.acceptTimeout = 0;
 		ssocket = Gdx.net.newServerSocket(Net.Protocol.TCP, 17893, sshints);
@@ -33,6 +39,7 @@ public class Server
 		SocketHints shints = new SocketHints(); //connecting client socket properties
 		shints.connectTimeout = 0;
 		shints.socketTimeout = 0;
+
 		while (true)
 		{
 			Socket clientSocket = ssocket.accept(null);

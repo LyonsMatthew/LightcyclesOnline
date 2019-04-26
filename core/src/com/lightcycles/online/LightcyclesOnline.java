@@ -14,16 +14,16 @@ public class LightcyclesOnline extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("lightcycle.png");
 
-		Thread serverThread = new Thread(new ServerRunnable());
-		serverThread.start();
-		Thread clientThread = new Thread(new ClientRunnable(true));
-		clientThread.start();
-		clientThread = new Thread(new ClientRunnable(true));
-		clientThread.start();
-		clientThread = new Thread(new ClientRunnable(false));
-		clientThread.start();
+//		Thread serverThread = new Thread(new ServerRunnable());
+//		serverThread.start();
+//		Thread clientThread = new Thread(new ClientRunnable(true));
+//		clientThread.start();
+//		clientThread = new Thread(new ClientRunnable(true));
+//		clientThread.start();
+//		clientThread = new Thread(new ClientRunnable(false));
+//		clientThread.start();
 	}
 
 	@Override
