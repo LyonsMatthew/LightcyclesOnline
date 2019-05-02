@@ -2,6 +2,7 @@ package com.lightcycles.online.Game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.lightcycles.online.Client.ClientRunnable;
 import com.lightcycles.online.Server.ServerRunnable;
 import com.lightcycles.online.Settings;
@@ -25,7 +26,9 @@ public class LightcyclesGameClient extends LightcyclesGame
 		this.gameScreen = new GameScreen(this, 1);
 		this.setScreen(gameScreen);
 
-		Thread clientThread = new Thread(new ClientRunnable(true, this, ip));
+		Stage stage = this.gameScreen.stage;
+
+		Thread clientThread = new Thread(new ClientRunnable(true, this, ip, stage));
 		clientThread.start();
 
 		LightcycleGameSimulation simulation = new LightcycleGameSimulation(gameScreen);

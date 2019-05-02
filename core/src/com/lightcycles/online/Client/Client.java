@@ -3,8 +3,11 @@ package com.lightcycles.online.Client;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Net;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.lightcycles.online.Game.LightcyclesGame;
 import org.lwjgl.input.Controllers;
 
@@ -12,7 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Client
+public class Client extends Actor
 {
 	final LightcyclesGame game;
 
@@ -21,6 +24,8 @@ public class Client
 
 	SocketHints shints;
 	Socket socket;
+
+	char last_direction;
 
 	public Client(boolean isPlayer, LightcyclesGame game, String ip)
 	{
@@ -46,24 +51,32 @@ public class Client
 		}
 
 		System.out.println("I'm client number " + player_num + "!");
-
-		queryInput();
 	}
 
 	public void queryInput()
 	{
 		try {
 			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				if (last_direction == 'r') return;
 				socket.getOutputStream().write("r\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				if (last_direction == 'd') return;
 				socket.getOutputStream().write("d\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				if (last_direction == 'l') return;
 				socket.getOutputStream().write("l\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				if (last_direction == 'u') return;
 				socket.getOutputStream().write("u\n".getBytes());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void draw(Batch batch, float parentAlpha)
+	{
+		queryInput();
 	}
 }

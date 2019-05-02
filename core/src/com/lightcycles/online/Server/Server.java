@@ -106,7 +106,7 @@ public class Server
 				e.printStackTrace();
 			}
 			System.out.println(input);
-			Gdx.app.postRunnable(new InputRunnable(input.charAt(0)));
+			//Gdx.app.postRunnable(new InputRunnable(input.charAt(0)));
 		}
 	}
 
