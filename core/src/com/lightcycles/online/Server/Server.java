@@ -6,6 +6,7 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
+import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Client.InputRunnable;
 import com.lightcycles.online.Game.LightcycleGameSimulation;
 import com.lightcycles.online.Game.LightcyclesGame;
@@ -30,11 +31,13 @@ public class Server
 	int totalBetters;
 	int totalConnections;
 	Map<Integer, Character> input_map;
+	InputPointer inpy;
 
-	public Server(LightcyclesGame game, Map<Integer, Character> input_map)
+	public Server(LightcyclesGame game, Map<Integer, Character> input_map, InputPointer inpy)
 	{
 		this.game = game;
 		this.input_map = input_map;
+		this.inpy = inpy;
 
 		sshints = new ServerSocketHints(); //server socket properties
 		sshints.acceptTimeout = 0;
@@ -57,6 +60,7 @@ public class Server
 						clientPlayerSocketInputStreams.add(buff);
 						totalConnections += 1;
 						totalPlayers += 1;
+						input_map.put(totalPlayers-1, 'o');
 						Thread thread = new Thread(new ServerClientHandlerRunnable(this,
 								totalPlayers-1, true));
 						thread.start();
@@ -109,6 +113,7 @@ public class Server
 				e.printStackTrace();
 			}
 			input_map.put(clientIndex, input.charAt(0));
+			inpy.input_char = 'y';
 		}
 	}
 

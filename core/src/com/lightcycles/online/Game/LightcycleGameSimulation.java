@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Settings;
 
 import java.util.ArrayList;
@@ -23,11 +24,13 @@ public class LightcycleGameSimulation extends Actor
 	LightcycleTimer timer;
 
 	Map<Integer, Character> input_map;
+	InputPointer inpy;
 
-	public LightcycleGameSimulation(GameScreen gameScreen, Map<Integer, Character> input_map)
+	public LightcycleGameSimulation(GameScreen gameScreen, Map<Integer, Character> input_map, InputPointer inpy)
 	{
 		this.gameScreen = gameScreen;
 		this.input_map = input_map;
+		this.inpy = inpy;
 
 		this.texture = new Texture(Gdx.files.internal("path.png"));
 		paths = new int[Settings.GRID_HEIGHT][Settings.GRID_WIDTH];
@@ -48,6 +51,8 @@ public class LightcycleGameSimulation extends Actor
 		timer.start();
 
 		gameScreen.stage.addActor(this);
+
+		while (this.inpy.input_char == 'n');
 		for(int i=0;i<gameScreen.player_count;i++) {
 			lightcycles.add(new Lightcycle(i));
 			gameScreen.stage.addActor(lightcycles.get(i));

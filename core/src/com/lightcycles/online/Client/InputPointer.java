@@ -2,7 +2,7 @@ package com.lightcycles.online.Client;
 
 public class InputPointer
 {
-	char input_char;
+	public char input_char;
 
 	public InputPointer()
 	{

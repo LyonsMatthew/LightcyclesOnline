@@ -36,7 +36,10 @@ public class LightcyclesGameClient extends LightcyclesGame
 		Thread clientThread = new Thread(new ClientRunnable(true, this, ip, stage));
 		clientThread.start();
 
-		LightcycleGameSimulation simulation = new LightcycleGameSimulation(gameScreen, input_map);
+		InputPointer inpy = new InputPointer();
+		inpy.input_char = 'n';
+
+		LightcycleGameSimulation simulation = new LightcycleGameSimulation(gameScreen, input_map, inpy);
 	}
 
 	public void render()
