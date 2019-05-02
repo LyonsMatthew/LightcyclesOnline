@@ -82,7 +82,6 @@ public class Lightcycle extends Actor
 
 	public void move()
 	{
-		System.out.println("MOVE " + this.next_action);
 		this.direction = this.next_action;
 		switch(this.next_action)
 		{

@@ -87,6 +87,12 @@ public class Server
 
 	public void manageClientPlayer(int clientIndex)
 	{
+		try {
+			clientPlayerSockets.get(clientIndex).getOutputStream().
+					write((String.valueOf(totalPlayers) + "\n").getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		System.out.println("Welcome, player " + clientIndex + "!");
 	}
 

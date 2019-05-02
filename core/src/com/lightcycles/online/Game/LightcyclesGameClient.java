@@ -3,11 +3,10 @@ package com.lightcycles.online.Game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.lightcycles.online.Client.ClientRunnable;
-import com.lightcycles.online.Server.Server;
 import com.lightcycles.online.Server.ServerRunnable;
 import com.lightcycles.online.Settings;
 
-public class LightcyclesGame extends Game
+public class LightcyclesGameClient extends LightcyclesGame
 {
 
 	public GameScreen gameScreen;
@@ -20,8 +19,8 @@ public class LightcyclesGame extends Game
 		this.gameScreen = new GameScreen(this, 1);
 		this.setScreen(gameScreen);
 
-		Thread serverThread = new Thread(new ServerRunnable(this));
-		serverThread.start();
+		Thread clientThread = new Thread(new ClientRunnable(true, this));
+		clientThread.start();
 
 		LightcycleGameSimulation simulation = new LightcycleGameSimulation(gameScreen);
 	}
