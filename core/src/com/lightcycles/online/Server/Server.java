@@ -6,6 +6,7 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.ServerSocket;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
+import com.lightcycles.online.Client.InputRunnable;
 import com.lightcycles.online.Game.LightcycleGameSimulation;
 import com.lightcycles.online.Game.LightcyclesGame;
 
@@ -87,6 +88,7 @@ public class Server
 
 	public void manageClientPlayer(int clientIndex)
 	{
+		BufferedReader buff = new BufferedReader(new InputStreamReader(clientPlayerSockets.get(clientIndex).getInputStream()));
 		try {
 			clientPlayerSockets.get(clientIndex).getOutputStream().
 					write((String.valueOf(totalPlayers) + "\n").getBytes());
@@ -94,6 +96,17 @@ public class Server
 			e.printStackTrace();
 		}
 		System.out.println("Welcome, player " + clientIndex + "!");
+
+		while(true)
+		{
+			String input = "o";
+			try {
+				input = buff.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Gdx.app.postRunnable(new InputRunnable(input.charAt(0)));
+		}
 	}
 
 	public void manageClientBetter(int clientIndex)

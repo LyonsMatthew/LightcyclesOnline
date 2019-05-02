@@ -52,14 +52,18 @@ public class Client
 
 	public void queryInput()
 	{
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			Gdx.app.postRunnable(new InputRunnable());
-		} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			//send down command
-		} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			//send left command
-		} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			//send up command
+		try {
+			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+					socket.getOutputStream().write("r".getBytes());
+			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				socket.getOutputStream().write("d".getBytes());
+			} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				socket.getOutputStream().write("l".getBytes());
+			} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				socket.getOutputStream().write("u".getBytes());
+			}
+		} catch (IOException e) {
+		e.printStackTrace();
 		}
 	}
 }
