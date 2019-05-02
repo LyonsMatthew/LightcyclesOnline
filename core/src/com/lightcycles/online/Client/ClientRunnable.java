@@ -7,16 +7,18 @@ public class ClientRunnable implements Runnable
 {
 	boolean isPlayer;
 	LightcyclesGame game;
+	String ip;
 
-	public ClientRunnable(boolean isPlayer, LightcyclesGame game)
+	public ClientRunnable(boolean isPlayer, LightcyclesGame game, String ip)
 	{
 		this.isPlayer = isPlayer;
 		this.game = game;
+		this.ip = ip;
 	}
 
 	@Override
 	public void run()
 	{
-		Client client = new Client(isPlayer, game);
+		Client client = new Client(isPlayer, game, ip);
 	}
 }

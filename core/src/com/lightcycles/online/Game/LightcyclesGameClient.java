@@ -10,6 +10,12 @@ public class LightcyclesGameClient extends LightcyclesGame
 {
 
 	public GameScreen gameScreen;
+	String ip;
+
+	public LightcyclesGameClient(String ip)
+	{
+		this.ip = ip;
+	}
 
 	@Override
 	public void create()
@@ -19,7 +25,7 @@ public class LightcyclesGameClient extends LightcyclesGame
 		this.gameScreen = new GameScreen(this, 1);
 		this.setScreen(gameScreen);
 
-		Thread clientThread = new Thread(new ClientRunnable(true, this));
+		Thread clientThread = new Thread(new ClientRunnable(true, this, ip));
 		clientThread.start();
 
 		LightcycleGameSimulation simulation = new LightcycleGameSimulation(gameScreen);

@@ -22,14 +22,14 @@ public class Client
 	SocketHints shints;
 	Socket socket;
 
-	public Client(boolean isPlayer, LightcyclesGame game)
+	public Client(boolean isPlayer, LightcyclesGame game, String ip)
 	{
 		this.isPlayer = isPlayer;
 
 		this.game = game;
 
 		shints = new SocketHints();
-		socket = Gdx.net.newClientSocket(Net.Protocol.TCP, "localhost", 17893, shints);
+		socket = Gdx.net.newClientSocket(Net.Protocol.TCP, ip, 17893, shints);
 
 		try {
 			socket.getOutputStream().write((isPlayer ? "player\n" : "better\n").getBytes());
@@ -54,16 +54,16 @@ public class Client
 	{
 		try {
 			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-					socket.getOutputStream().write("r".getBytes());
+				socket.getOutputStream().write("r\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				socket.getOutputStream().write("d".getBytes());
+				socket.getOutputStream().write("d\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-				socket.getOutputStream().write("l".getBytes());
+				socket.getOutputStream().write("l\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				socket.getOutputStream().write("u".getBytes());
+				socket.getOutputStream().write("u\n".getBytes());
 			}
 		} catch (IOException e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 }

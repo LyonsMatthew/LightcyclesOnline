@@ -105,6 +105,7 @@ public class Server
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			System.out.println(input);
 			Gdx.app.postRunnable(new InputRunnable(input.charAt(0)));
 		}
 	}
