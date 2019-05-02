@@ -37,9 +37,9 @@ public class LightcyclesGameClient extends LightcyclesGame
 		clientThread.start();
 
 		InputPointer inpy = new InputPointer();
-		inpy.input_char = 'n';
+		inpy.input_char = 'y';
 
-		LightcycleGameSimulation simulation = new LightcycleGameSimulation(gameScreen, input_map, inpy);
+		LightcycleGameSimulation simulation = new LightcycleGameSimulationClient(gameScreen, input_map, inpy);
 	}
 
 	public void render()
