@@ -10,7 +10,7 @@ import com.lightcycles.online.Settings;
 public class Lightcycle extends Actor
 {
 	private Texture texture;
-	int player_num;
+	public int player_num;
 
 	int grid_x;
 	int grid_y;
@@ -70,9 +70,22 @@ public class Lightcycle extends Actor
 		}
 	}
 
-	public void set_action(int action)
+	public void set_action(char action)
 	{
-		this.next_action = action;
+		switch(action)
+		{
+			case 'r':
+				this.next_action = 0;
+				break;
+			case 'd':
+				this.next_action = 1;
+				break;
+			case 'l':
+				this.next_action = 2;
+				break;
+			default:
+				this.next_action = 3;
+		}
 	}
 
 	public int get_next_action()

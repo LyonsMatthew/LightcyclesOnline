@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lightcycles.online.Settings;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 public class LightcycleGameSimulation extends Actor
@@ -21,9 +22,12 @@ public class LightcycleGameSimulation extends Actor
 
 	LightcycleTimer timer;
 
-	public LightcycleGameSimulation(GameScreen gameScreen)
+	Map<Integer, Character> input_map;
+
+	public LightcycleGameSimulation(GameScreen gameScreen, Map<Integer, Character> input_map)
 	{
 		this.gameScreen = gameScreen;
+		this.input_map = input_map;
 
 		this.texture = new Texture(Gdx.files.internal("path.png"));
 		paths = new int[Settings.GRID_HEIGHT][Settings.GRID_WIDTH];
@@ -86,15 +90,13 @@ public class LightcycleGameSimulation extends Actor
 
 	public void simulateSingleStep()
 	{
-		Random random = new Random();
+
 		for (Lightcycle lightcycle : this.lightcycles)
 		{
-			int nextAction;
-			do
-			{
-				nextAction = random.nextInt(4);
-			} while (nextAction == (lightcycle.get_next_action() + 2) % 4);
+			if (input_map.get(lightcycle.player_num) == 'o') continue;
+			char nextAction = input_map.get(lightcycle.player_num);
 			lightcycle.set_action(nextAction);
+			input_map.put(lightcycle.player_num, 'o');
 		}
 		for (Lightcycle lightcycle : this.lightcycles)
 		{

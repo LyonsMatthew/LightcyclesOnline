@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Server
 {
@@ -28,10 +29,12 @@ public class Server
 	int totalPlayers;
 	int totalBetters;
 	int totalConnections;
+	Map<Integer, Character> input_map;
 
-	public Server(LightcyclesGame game)
+	public Server(LightcyclesGame game, Map<Integer, Character> input_map)
 	{
 		this.game = game;
+		this.input_map = input_map;
 
 		sshints = new ServerSocketHints(); //server socket properties
 		sshints.acceptTimeout = 0;
@@ -105,8 +108,7 @@ public class Server
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println(input);
-			//Gdx.app.postRunnable(new InputRunnable(input.charAt(0)));
+			input_map.put(clientIndex, input.charAt(0));
 		}
 	}
 
