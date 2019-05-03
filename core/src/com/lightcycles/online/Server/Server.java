@@ -141,7 +141,7 @@ public class Server
 		int last_time = -10;
 		while (inpy.get(0).input_char == 'n')
 		{
-			System.out.flush();
+			System.out.print("");
 			if ((int)inpy.get(1).input_char != totalPlayers) continue;
 			if (totalPlayers > 0)
 			{
