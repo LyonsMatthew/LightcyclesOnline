@@ -171,7 +171,6 @@ public class LightcycleGameSimulation extends Actor
 				e.printStackTrace();
 			}
 		}
-		System.out.println((int)this.inpy.get(1).input_char);
 		for(int i=0;i<this.inpy.get(1).input_char;i++) {
 			lightcycles.add(new Lightcycle(i, this.lcTexture));
 			this.stage.addActor(lightcycles.get(i));

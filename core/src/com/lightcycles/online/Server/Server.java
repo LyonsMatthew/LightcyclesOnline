@@ -11,6 +11,7 @@ import com.lightcycles.online.Client.InputRunnable;
 import com.lightcycles.online.Game.LightcycleGameSimulation;
 import com.lightcycles.online.Game.LightcycleTimer;
 import com.lightcycles.online.Game.LightcyclesGame;
+import com.lightcycles.online.Settings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class Server
 		this.input_map = input_map;
 		this.inpy = inpy;
 
-		this.timer = new LightcycleTimer(10.f);
+		this.timer = new LightcycleTimer(Settings.GAME_START_DElAY);
 
 		Thread fred_the_thread = new Thread(new ServerClientButItsActuallyaServerHandlerRunnable(this));
 		fred_the_thread.start();
@@ -68,8 +69,6 @@ public class Server
 						clientPlayerSocketInputStreams.add(buff);
 						totalConnections += 1;
 						totalPlayers += 1;
-						inpy.get(1).input_char = (char)totalPlayers;
-						if (totalPlayers == 1) timer.start();
 						input_map.put(totalPlayers-1, 'o');
 						Thread thread = new Thread(new ServerClientHandlerRunnable(this,
 								totalPlayers-1, true));
@@ -113,7 +112,8 @@ public class Server
 			e.printStackTrace();
 		}
 		System.out.println("Welcome, player " + clientIndex + "!");
-
+		timer.start();
+		inpy.get(1).input_char = (char)totalPlayers;
 		while(true)
 		{
 			String input = "o";
@@ -134,29 +134,35 @@ public class Server
 
 	public void manageClientButItsActuallyAServer(int notAClientIndex)
 	{
-		while(true)
-		{
-			if (timer.time_left() < 0 && totalPlayers > 0) inpy.get(0).input_char = 'y';
-		}
-//		while (inpy.get(0).input_char == 'n')
+//		while(true)
 //		{
-//			if (totalPlayers > 0)
-//			{
-//				if (timer.time_left() > 0)
-//				{
-//					System.out.println("Game starting in " + timer.time_left() + " second" +
-//							((timer.time_left() == 1) ? "" : "s") + "!");
-//				}
-//				else
-//				{
-//					System.out.println("LET'S START IT UP BOIIIIIIIZZZ");
-//					System.out.println("WE PARTYIN UP IN THIS");
-//					System.out.println("L I G H T");
-//					System.out.println("C Y C L E SZZZZZZZZZZZZZZZZ");
-//					inpy.get(0).input_char = 'y';
-//				}
-//			}
+//			if (timer.time_left() < 0 && totalPlayers > 0) inpy.get(0).input_char = 'y';
 //		}
-//		System.out.println("break");
+		int last_time = -10;
+		while (inpy.get(0).input_char == 'n')
+		{
+			System.out.flush();
+			if ((int)inpy.get(1).input_char != totalPlayers) continue;
+			if (totalPlayers > 0)
+			{
+				if (last_time != (int)timer.time_left())
+				{
+					last_time = (int)timer.time_left();
+					if (timer.time_left() > 0)
+					{
+						System.out.println("Game starting in " + (int)timer.time_left() + " second" +
+								((timer.time_left() == 1) ? "" : "s") + "!");
+					}
+					else
+					{
+						System.out.println("LET'S START IT UP BOIIIIIIIZZZ");
+						System.out.println("WE PARTYIN UP IN THIS");
+						System.out.println("L I G H T");
+						System.out.println("C Y C L E SZZZZZZZZZZZZZZZZ");
+						inpy.get(0).input_char = 'y';
+					}
+				}
+			}
+		}
 	}
 }
