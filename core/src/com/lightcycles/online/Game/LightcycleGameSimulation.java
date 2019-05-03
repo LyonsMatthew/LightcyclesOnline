@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Settings;
 
@@ -21,10 +22,13 @@ public class LightcycleGameSimulation extends Actor
 	ArrayList<Lightcycle> lightcycles;
 
 	Texture texture;
+	Texture lcTexture;
 	int[][] paths;
 	Path[][] pathSprites;
 
 	LightcycleTimer timer;
+
+	Stage stage;
 
 	Map<Integer, Character> input_map;
 	List<InputPointer> inpy;
@@ -36,6 +40,7 @@ public class LightcycleGameSimulation extends Actor
 		this.inpy = inpy;
 
 		this.texture = new Texture(Gdx.files.internal("path.png"));
+		this.lcTexture = new Texture(Gdx.files.internal("lightcycle.png"));
 		paths = new int[Settings.GRID_HEIGHT][Settings.GRID_WIDTH];
 		pathSprites = new Path[Settings.GRID_HEIGHT][Settings.GRID_WIDTH];
 
@@ -53,21 +58,14 @@ public class LightcycleGameSimulation extends Actor
 		this.timer = new LightcycleTimer(Settings.TICK_LENGTH);
 		timer.start();
 
-		gameScreen.stage.addActor(this);
+		this.stage = gameScreen.stage;
 
-		while (this.inpy.get(0).input_char == 'n')
-		{
-			try {
-				sleep(200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		stage.addActor(this);
+		new Thread() {
+			public void run() {
+				addPlayers();
 			}
-		}
-
-		for(int i=0;i<this.inpy.get(1).input_char;i++) {
-			lightcycles.add(new Lightcycle(i));
-			gameScreen.stage.addActor(lightcycles.get(i));
-		}
+		}.start();
 	}
 
 	@Override
@@ -161,5 +159,22 @@ public class LightcycleGameSimulation extends Actor
 //		if (living_cycle_count == 1) {
 //			System.out.println("IT'S ALL OVER FOLKS");
 //		}
+	}
+
+	public void addPlayers()
+	{
+		while (this.inpy.get(0).input_char == 'n')
+		{
+			try {
+				sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println((int)this.inpy.get(1).input_char);
+		for(int i=0;i<this.inpy.get(1).input_char;i++) {
+			lightcycles.add(new Lightcycle(i, this.lcTexture));
+			this.stage.addActor(lightcycles.get(i));
+		}
 	}
 }

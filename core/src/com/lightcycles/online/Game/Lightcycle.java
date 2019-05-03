@@ -22,9 +22,9 @@ public class Lightcycle extends Actor
 
 	Color color;
 
-	public Lightcycle(int player_num)
+	public Lightcycle(int player_num, Texture texture)
 	{
-		this.texture = new Texture(Gdx.files.internal("lightcycle.png"));
+		this.texture = texture;
 		this.player_num = player_num;
 
 		this.setName("cycle " + player_num);

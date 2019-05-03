@@ -32,7 +32,7 @@ public class LightcyclesGameClient extends LightcyclesGame
 
 		List<InputPointer> inpy = new ArrayList<>();
 		inpy.add(new InputPointer('o'));
-		inpy.add(new InputPointer('o'));
+		inpy.add(new InputPointer((char) 0));
 		inpy.get(0).input_char = 'y';
 
 		this.gameScreen = new GameScreen(this, inpy);
