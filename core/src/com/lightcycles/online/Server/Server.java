@@ -34,13 +34,18 @@ public class Server
 	int totalConnections;
 	Map<Integer, Character> input_map;
 	List<InputPointer> inpy;
-	LightcycleTimer timer = new LightcycleTimer(30);
+	LightcycleTimer timer;
 
 	public Server(LightcyclesGame game, Map<Integer, Character> input_map, List<InputPointer> inpy)
 	{
 		this.game = game;
 		this.input_map = input_map;
 		this.inpy = inpy;
+
+		this.timer = new LightcycleTimer(10.f);
+
+		Thread fred_the_thread = new Thread(new ServerClientButItsActuallyaServerHandlerRunnable(this));
+		fred_the_thread.start();
 
 		sshints = new ServerSocketHints(); //server socket properties
 		sshints.acceptTimeout = 0;
@@ -50,29 +55,8 @@ public class Server
 		shints.connectTimeout = 0;
 		shints.socketTimeout = 0;
 
-		int last_time = -10;
 		while (true)
 		{
-			if (totalPlayers > 0)
-			{
-				if (last_time != (int)timer.time_left())
-				{
-					last_time = (int)timer.time_left();
-					if (last_time == 0)
-					{
-						System.out.println("LET'S START IT UP BOIIIIIIIZZZ");
-						System.out.println("WE PARTYIN UP IN THIS");
-						System.out.println("L I G H T");
-						System.out.println("C Y C L E SZZZZZZZZZZZZZZZZ");
-						inpy.get(0).input_char = 'y';
-					}
-					else
-					{
-						System.out.println("Game starting in " + last_time + " second" +
-								((last_time == 1) ? "" : "s") + "!");
-					}
-				}
-			}
 			Socket clientSocket = ssocket.accept(null);
 			BufferedReader buff = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			//check if it's a better or a player; for now, just assume all are players
@@ -146,5 +130,33 @@ public class Server
 	public void manageClientBetter(int clientIndex)
 	{
 		System.out.println("Welcome, better " + clientIndex + "!");
+	}
+
+	public void manageClientButItsActuallyAServer(int notAClientIndex)
+	{
+		while(true)
+		{
+			if (timer.time_left() < 0 && totalPlayers > 0) inpy.get(0).input_char = 'y';
+		}
+//		while (inpy.get(0).input_char == 'n')
+//		{
+//			if (totalPlayers > 0)
+//			{
+//				if (timer.time_left() > 0)
+//				{
+//					System.out.println("Game starting in " + timer.time_left() + " second" +
+//							((timer.time_left() == 1) ? "" : "s") + "!");
+//				}
+//				else
+//				{
+//					System.out.println("LET'S START IT UP BOIIIIIIIZZZ");
+//					System.out.println("WE PARTYIN UP IN THIS");
+//					System.out.println("L I G H T");
+//					System.out.println("C Y C L E SZZZZZZZZZZZZZZZZ");
+//					inpy.get(0).input_char = 'y';
+//				}
+//			}
+//		}
+//		System.out.println("break");
 	}
 }

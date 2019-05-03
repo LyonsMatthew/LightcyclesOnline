@@ -29,7 +29,7 @@ public class LightcycleTimer
 
 	public float time_left()
 	{
-		return (System.currentTimeMillis() - starting_moment)/1000f;
+		return (seconds - (System.currentTimeMillis() - starting_moment)/1000f);
 	}
 
 	public void reset()
