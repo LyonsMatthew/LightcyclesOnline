@@ -27,6 +27,11 @@ public class LightcycleTimer
 		return false;
 	}
 
+	public float time_left()
+	{
+		return (System.currentTimeMillis() - starting_moment)/1000f;
+	}
+
 	public void reset()
 	{
 		this.starting_moment = System.currentTimeMillis();

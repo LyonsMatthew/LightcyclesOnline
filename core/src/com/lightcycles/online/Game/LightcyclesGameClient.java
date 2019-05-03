@@ -8,7 +8,9 @@ import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Server.ServerRunnable;
 import com.lightcycles.online.Settings;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LightcyclesGameClient extends LightcyclesGame
@@ -28,16 +30,18 @@ public class LightcyclesGameClient extends LightcyclesGame
 	{
 		Gdx.graphics.setWindowedMode(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT);
 
-		this.gameScreen = new GameScreen(this, 1);
+		List<InputPointer> inpy = new ArrayList<>();
+		inpy.add(new InputPointer('o'));
+		inpy.add(new InputPointer('o'));
+		inpy.get(0).input_char = 'y';
+
+		this.gameScreen = new GameScreen(this, inpy);
 		this.setScreen(gameScreen);
 
 		Stage stage = this.gameScreen.stage;
 
 		Thread clientThread = new Thread(new ClientRunnable(true, this, ip, stage));
 		clientThread.start();
-
-		InputPointer inpy = new InputPointer();
-		inpy.input_char = 'y';
 
 		LightcycleGameSimulation simulation = new LightcycleGameSimulationClient(gameScreen, input_map, inpy);
 	}

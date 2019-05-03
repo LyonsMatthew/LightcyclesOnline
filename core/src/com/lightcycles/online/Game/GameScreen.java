@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Settings;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameScreen implements Screen
 {
@@ -23,11 +25,13 @@ public class GameScreen implements Screen
 	public Viewport viewport;
 
 	int player_count;
+	List<InputPointer> inpy;
 
 
-	public GameScreen(final LightcyclesGame game, int player_count)
+	public GameScreen(final LightcyclesGame game, List<InputPointer> inpy)
 	{
 		this.game = game;
+		this.inpy = inpy;
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT);
@@ -39,8 +43,6 @@ public class GameScreen implements Screen
 
 		this.stage = new Stage(viewport, batch);
 		Gdx.input.setInputProcessor(stage);
-
-		this.player_count = player_count;
 	}
 
 	public void render(float delta)

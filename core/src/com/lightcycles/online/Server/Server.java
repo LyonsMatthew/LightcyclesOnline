@@ -9,12 +9,14 @@ import com.badlogic.gdx.net.SocketHints;
 import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Client.InputRunnable;
 import com.lightcycles.online.Game.LightcycleGameSimulation;
+import com.lightcycles.online.Game.LightcycleTimer;
 import com.lightcycles.online.Game.LightcyclesGame;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Server
@@ -31,9 +33,10 @@ public class Server
 	int totalBetters;
 	int totalConnections;
 	Map<Integer, Character> input_map;
-	InputPointer inpy;
+	List<InputPointer> inpy;
+	LightcycleTimer timer = new LightcycleTimer(30);
 
-	public Server(LightcyclesGame game, Map<Integer, Character> input_map, InputPointer inpy)
+	public Server(LightcyclesGame game, Map<Integer, Character> input_map, List<InputPointer> inpy)
 	{
 		this.game = game;
 		this.input_map = input_map;
@@ -47,8 +50,29 @@ public class Server
 		shints.connectTimeout = 0;
 		shints.socketTimeout = 0;
 
+		int last_time = -10;
 		while (true)
 		{
+			if (totalPlayers > 0)
+			{
+				if (last_time != (int)timer.time_left())
+				{
+					last_time = (int)timer.time_left();
+					if (last_time == 0)
+					{
+						System.out.println("LET'S START IT UP BOIIIIIIIZZZ");
+						System.out.println("WE PARTYIN UP IN THIS");
+						System.out.println("L I G H T");
+						System.out.println("C Y C L E SZZZZZZZZZZZZZZZZ");
+						inpy.get(0).input_char = 'y';
+					}
+					else
+					{
+						System.out.println("Game starting in " + last_time + " second" +
+								((last_time == 1) ? "" : "s") + "!");
+					}
+				}
+			}
 			Socket clientSocket = ssocket.accept(null);
 			BufferedReader buff = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			//check if it's a better or a player; for now, just assume all are players
@@ -60,6 +84,8 @@ public class Server
 						clientPlayerSocketInputStreams.add(buff);
 						totalConnections += 1;
 						totalPlayers += 1;
+						inpy.get(1).input_char = (char)totalPlayers;
+						if (totalPlayers == 1) timer.start();
 						input_map.put(totalPlayers-1, 'o');
 						Thread thread = new Thread(new ServerClientHandlerRunnable(this,
 								totalPlayers-1, true));
@@ -113,7 +139,7 @@ public class Server
 				e.printStackTrace();
 			}
 			input_map.put(clientIndex, input.charAt(0));
-			inpy.input_char = 'y';
+			inpy.get(0).input_char = 'y';
 		}
 	}
 

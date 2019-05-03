@@ -4,8 +4,8 @@ public class InputPointer
 {
 	public char input_char;
 
-	public InputPointer()
+	public InputPointer(char c)
 	{
-		this.input_char = 'o';
+		this.input_char = c;
 	}
 }

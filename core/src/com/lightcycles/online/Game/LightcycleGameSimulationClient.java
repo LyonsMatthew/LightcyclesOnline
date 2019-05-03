@@ -9,6 +9,7 @@ import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Settings;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class LightcycleGameSimulationClient extends LightcycleGameSimulation
@@ -23,9 +24,9 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 	LightcycleTimer timer;
 
 	Map<Integer, Character> input_map;
-	InputPointer inpy;
+	List<InputPointer> inpy;
 
-	public LightcycleGameSimulationClient(GameScreen gameScreen, Map<Integer, Character> input_map, InputPointer inpy)
+	public LightcycleGameSimulationClient(GameScreen gameScreen, Map<Integer, Character> input_map, List<InputPointer> inpy)
 	{
 		super(gameScreen, input_map, inpy);
 		this.gameScreen = gameScreen;
@@ -52,8 +53,8 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 
 		gameScreen.stage.addActor(this);
 
-		while (this.inpy.input_char == 'n');
-		for(int i=0;i<gameScreen.player_count;i++) {
+		while (this.inpy.get(0).input_char == 'n');
+		for(int i=0;i<this.inpy.get(1).input_char;i++) {
 			lightcycles.add(new Lightcycle(i));
 			gameScreen.stage.addActor(lightcycles.get(i));
 		}

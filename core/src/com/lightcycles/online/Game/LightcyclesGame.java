@@ -8,7 +8,9 @@ import com.lightcycles.online.Server.Server;
 import com.lightcycles.online.Server.ServerRunnable;
 import com.lightcycles.online.Settings;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LightcyclesGame extends Game
@@ -22,13 +24,15 @@ public class LightcyclesGame extends Game
 	{
 		Gdx.graphics.setWindowedMode(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT);
 
-		this.gameScreen = new GameScreen(this, 1);
+		List<InputPointer> inpy = new ArrayList<>();
+		inpy.add(new InputPointer('o'));
+		inpy.add(new InputPointer('o'));
+		inpy.get(0).input_char = 'n';
+
+		this.gameScreen = new GameScreen(this, inpy);
 		this.setScreen(gameScreen);
 
 		this.input_map = new HashMap<>();
-
-		InputPointer inpy = new InputPointer();
-		inpy.input_char = 'n';
 
 		Thread serverThread = new Thread(new ServerRunnable(this, input_map, inpy));
 		serverThread.start();
