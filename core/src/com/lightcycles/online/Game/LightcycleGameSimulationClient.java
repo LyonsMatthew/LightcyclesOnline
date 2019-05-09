@@ -76,6 +76,7 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 				String new_pos = buff.readLine();
 				System.out.println(new_pos);
 				move_based_on_input(pnum, new_pos);
+				lightcycles.get(pnum).move();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
