@@ -100,11 +100,13 @@ public class LightcycleGameSimulation extends Actor
 	@Override
 	public void act(float deltaTime)
 	{
+		System.out.println("yay");
 		boolean tick = timer.tick();
 		if (tick && this.inpy.get(3).input_char != 'n')
 		{
 			new Thread() {
 				public void run() {
+					System.out.println("simulate single step");
 					simulateSingleStep();
 				}
 			}.start();
