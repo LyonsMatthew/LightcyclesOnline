@@ -109,7 +109,6 @@ public class LightcycleGameSimulation extends Actor
 
 	public void simulateSingleStep()
 	{
-		System.out.println("simss");
 		for (Lightcycle lightcycle : this.lightcycles)
 		{
 			for (Integer i : input_map.keySet()) {
@@ -118,7 +117,6 @@ public class LightcycleGameSimulation extends Actor
 			if (input_map.get(lightcycle.player_num) == 'o') continue;
 			char nextAction = input_map.get(lightcycle.player_num);
 			lightcycle.set_action(nextAction);
-			input_map.put(lightcycle.player_num, 'o');
 		}
 		for (Lightcycle lightcycle : this.lightcycles)
 		{
@@ -133,7 +131,9 @@ public class LightcycleGameSimulation extends Actor
 			checkDeath(lightcycle.get_player_num());
 			try {
 				System.out.println(":(");
-				clientSockets.get(lightcycle.player_num).getOutputStream().write((lightcycle.grid_x + "," + lightcycle.grid_y + "\n").getBytes());
+				for (Socket cs : this.clientSockets) {
+					cs.getOutputStream().write((lightcycle.grid_x + "," + lightcycle.grid_y + "\n").getBytes());
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
