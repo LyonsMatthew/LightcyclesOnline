@@ -103,7 +103,11 @@ public class LightcycleGameSimulation extends Actor
 		boolean tick = timer.tick();
 		if (tick && this.inpy.get(3).input_char != 'n')
 		{
-			simulateSingleStep();
+			new Thread() {
+				public void run() {
+					simulateSingleStep();
+				}
+			}.start();
 		}
 	}
 
@@ -111,9 +115,6 @@ public class LightcycleGameSimulation extends Actor
 	{
 		for (Lightcycle lightcycle : this.lightcycles)
 		{
-			for (Integer i : input_map.keySet()) {
-					System.out.println(input_map.get(i));
-			}
 			if (input_map.get(lightcycle.player_num) == 'o') continue;
 			char nextAction = input_map.get(lightcycle.player_num);
 			lightcycle.set_action(nextAction);
@@ -130,7 +131,6 @@ public class LightcycleGameSimulation extends Actor
 			paths[old_y][old_x] = lightcycle.get_player_num();
 			checkDeath(lightcycle.get_player_num());
 			try {
-				System.out.println(":(");
 				for (Socket cs : this.clientSockets) {
 					cs.getOutputStream().write((lightcycle.grid_x + "," + lightcycle.grid_y + "\n").getBytes());
 				}
