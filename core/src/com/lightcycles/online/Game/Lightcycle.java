@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lightcycles.online.Settings;
 
+import java.util.Random;
+
 public class Lightcycle extends Actor
 {
 	private Texture texture;
@@ -31,12 +33,13 @@ public class Lightcycle extends Actor
 		this.setWidth(Settings.SCREEN_WIDTH / Settings.GRID_WIDTH);
 		this.setHeight(Settings.SCREEN_HEIGHT / Settings.GRID_HEIGHT);
 
-		this.grid_x = 3 + player_num * 5;
-		this.grid_y = 7;
+		Random random = new Random();
+		this.grid_x = random.nextInt(Settings.GRID_WIDTH);
+		this.grid_y = random.nextInt(Settings.GRID_HEIGHT);
 
 		this.set_position();
 
-		this.color = new Color(1.0f, 0.0f, 0.0f, 1);
+		this.color = new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), (float)Math.random());
 	}
 
 	public int get_player_num()
