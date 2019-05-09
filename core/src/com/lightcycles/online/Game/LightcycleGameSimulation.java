@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Settings;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,11 +35,14 @@ public class LightcycleGameSimulation extends Actor
 	Map<Integer, Character> input_map;
 	List<InputPointer> inpy;
 
-	public LightcycleGameSimulation(GameScreen gameScreen, Map<Integer, Character> input_map, List<InputPointer> inpy)
+	List<Socket> clientSockets;
+
+	public LightcycleGameSimulation(GameScreen gameScreen, Map<Integer, Character> input_map, List<InputPointer> inpy, List<Socket> sockets)
 	{
 		this.gameScreen = gameScreen;
 		this.input_map = input_map;
 		this.inpy = inpy;
+		this.clientSockets = sockets;
 
 		this.texture = new Texture(Gdx.files.internal("path.png"));
 		this.lcTexture = new Texture(Gdx.files.internal("lightcycle.png"));
@@ -96,7 +101,7 @@ public class LightcycleGameSimulation extends Actor
 	public void act(float deltaTime)
 	{
 		boolean tick = timer.tick();
-		if (tick)
+		if (tick && this.inpy.get(3).input_char != 'n')
 		{
 			simulateSingleStep();
 		}
@@ -104,9 +109,12 @@ public class LightcycleGameSimulation extends Actor
 
 	public void simulateSingleStep()
 	{
-
+		System.out.println("simss");
 		for (Lightcycle lightcycle : this.lightcycles)
 		{
+			for (Integer i : input_map.keySet()) {
+					System.out.println(input_map.get(i));
+			}
 			if (input_map.get(lightcycle.player_num) == 'o') continue;
 			char nextAction = input_map.get(lightcycle.player_num);
 			lightcycle.set_action(nextAction);
@@ -123,6 +131,12 @@ public class LightcycleGameSimulation extends Actor
 			lightcycle.move();
 			paths[old_y][old_x] = lightcycle.get_player_num();
 			checkDeath(lightcycle.get_player_num());
+			try {
+				System.out.println(":(");
+				clientSockets.get(lightcycle.player_num).getOutputStream().write((lightcycle.grid_x + "," + lightcycle.grid_y + "\n").getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -138,7 +152,15 @@ public class LightcycleGameSimulation extends Actor
 		}
 		else
 		{
-			int pathValue = paths[lightcycles.get(player_num).get_grid_y()][lightcycles.get(player_num).get_grid_x()];
+			int pathValue = 0;
+			try
+			{
+				pathValue = paths[lightcycles.get(player_num).get_grid_y()][lightcycles.get(player_num).get_grid_x()];
+			}
+			catch (ArrayIndexOutOfBoundsException e)
+			{
+				lightcycles.get(player_num).die();
+			}
 			if (pathValue != -1)
 			{
 				lightcycles.get(player_num).die();
@@ -175,5 +197,6 @@ public class LightcycleGameSimulation extends Actor
 			lightcycles.add(new Lightcycle(i, this.lcTexture));
 			this.stage.addActor(lightcycles.get(i));
 		}
+		this.inpy.get(2).input_char = 'y';
 	}
 }

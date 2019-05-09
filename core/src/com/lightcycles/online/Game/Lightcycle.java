@@ -12,8 +12,8 @@ public class Lightcycle extends Actor
 	private Texture texture;
 	public int player_num;
 
-	int grid_x;
-	int grid_y;
+	public int grid_x;
+	public int grid_y;
 
 	int next_action; //0 = right, 1 = down, 2 = left, 3 = up
 	int direction; //same as above

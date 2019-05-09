@@ -26,7 +26,7 @@ public class Server
 
 	ServerSocketHints sshints;
 	ServerSocket ssocket;
-	ArrayList<Socket> clientPlayerSockets = new ArrayList<>();
+	List<Socket> clientPlayerSockets;
 	ArrayList<BufferedReader> clientPlayerSocketInputStreams = new ArrayList<>();
 	ArrayList<Socket> clientBetterSockets = new ArrayList<>();
 	ArrayList<BufferedReader> clientBetterSocketInputStreams = new ArrayList<>();
@@ -37,11 +37,12 @@ public class Server
 	List<InputPointer> inpy;
 	LightcycleTimer timer;
 
-	public Server(LightcyclesGame game, Map<Integer, Character> input_map, List<InputPointer> inpy)
+	public Server(LightcyclesGame game, Map<Integer, Character> input_map, List<InputPointer> inpy, List<Socket> sockets)
 	{
 		this.game = game;
 		this.input_map = input_map;
 		this.inpy = inpy;
+		this.clientPlayerSockets = sockets;
 
 		this.timer = new LightcycleTimer(Settings.GAME_START_DElAY);
 
@@ -155,6 +156,14 @@ public class Server
 					}
 					else
 					{
+						for (Socket s : clientPlayerSockets) {
+							try {
+								System.out.println((int)inpy.get(1).input_char);
+								s.getOutputStream().write((inpy.get(1).input_char + "\n").getBytes());
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
 						System.out.println("LET'S START IT UP BOIIIIIIIZZZ");
 						System.out.println("WE PARTYIN UP IN THIS");
 						System.out.println("L I G H T");

@@ -3,26 +3,25 @@ package com.lightcycles.online.Client;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.lightcycles.online.Client.Client;
 import com.lightcycles.online.Game.LightcyclesGame;
+import com.lightcycles.online.Game.LightcyclesGameClient;
+
+import java.util.List;
 
 public class ClientRunnable implements Runnable
 {
-	boolean isPlayer;
-	LightcyclesGame game;
-	String ip;
 	Stage stage;
+	Client clint;
 
-	public ClientRunnable(boolean isPlayer, LightcyclesGame game, String ip, Stage stage)
+	public ClientRunnable(Stage stage, Client client)
 	{
-		this.isPlayer = isPlayer;
-		this.game = game;
-		this.ip = ip;
 		this.stage = stage;
+		this.clint = client;
+		LightcyclesGameClient.client = client;
 	}
 
 	@Override
 	public void run()
 	{
-		Client client = new Client(isPlayer, game, ip);
-		stage.addActor(client);
+		stage.addActor(clint);
 	}
 }

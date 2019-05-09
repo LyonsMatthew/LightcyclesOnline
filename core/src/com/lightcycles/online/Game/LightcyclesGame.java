@@ -2,6 +2,7 @@ package com.lightcycles.online.Game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.net.Socket;
 import com.lightcycles.online.Client.ClientRunnable;
 import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Server.Server;
@@ -27,6 +28,8 @@ public class LightcyclesGame extends Game
 		List<InputPointer> inpy = new ArrayList<>();
 		inpy.add(new InputPointer('o'));
 		inpy.add(new InputPointer('o'));
+		inpy.add(new InputPointer('o'));
+		inpy.add(new InputPointer('o'));
 		inpy.get(0).input_char = 'n';
 
 		this.gameScreen = new GameScreen(this, inpy);
@@ -34,10 +37,12 @@ public class LightcyclesGame extends Game
 
 		this.input_map = new HashMap<>();
 
-		Thread serverThread = new Thread(new ServerRunnable(this, input_map, inpy));
+		List<Socket> sockets = new ArrayList<Socket>();
+
+		Thread serverThread = new Thread(new ServerRunnable(this, input_map, inpy, sockets));
 		serverThread.start();
 
-		LightcycleGameSimulation simulation = new LightcycleGameSimulation(gameScreen, input_map, inpy);
+		LightcycleGameSimulation simulation = new LightcycleGameSimulation(gameScreen, input_map, inpy, sockets);
 	}
 
 	public void render()

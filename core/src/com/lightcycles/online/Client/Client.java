@@ -13,21 +13,26 @@ import com.lightcycles.online.Game.LightcyclesGame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class Client extends Actor
 {
 	final LightcyclesGame game;
 
 	boolean isPlayer;
-	int player_num;
+	public int player_num;
+
+	boolean isDead;
 
 	SocketHints shints;
-	Socket socket;
+	public Socket socket;
 
-	char last_direction;
+	public char last_direction = 'o';
 
-	public Client(boolean isPlayer, LightcyclesGame game, String ip)
+	public Client(boolean isPlayer, LightcyclesGame game, String ip, List<InputPointer> inpy)
 	{
+		this.isDead = false;
+
 		this.isPlayer = isPlayer;
 
 		this.game = game;
@@ -45,32 +50,33 @@ public class Client extends Actor
 		try {
 			String line = buff.readLine();
 			int player_num = Integer.parseInt(line);
+			line = buff.readLine();
+			inpy.get(1).input_char = line.charAt(0);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		inpy.get(0).input_char = 'y';
 
 		System.out.println("I'm client number " + player_num + "!");
 	}
 
 	public void queryInput()
 	{
+		if (isDead) return;
 		try {
 			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 				if (last_direction == 'r' || last_direction == 'l') return;
 				socket.getOutputStream().write("r\n".getBytes());
-				last_direction = 'r';
 			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 				if (last_direction == 'd' || last_direction == 'u') return;
 				socket.getOutputStream().write("d\n".getBytes());
-				last_direction = 'd';
 			} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 				if (last_direction == 'l' || last_direction == 'r') return;
 				socket.getOutputStream().write("l\n".getBytes());
-				last_direction = 'l';
 			} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
 				if (last_direction == 'u' || last_direction == 'd') return;
 				socket.getOutputStream().write("u\n".getBytes());
-				last_direction = 'u';
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

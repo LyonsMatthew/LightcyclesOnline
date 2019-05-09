@@ -3,6 +3,7 @@ package com.lightcycles.online.Game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.lightcycles.online.Client.Client;
 import com.lightcycles.online.Client.ClientRunnable;
 import com.lightcycles.online.Client.InputPointer;
 import com.lightcycles.online.Server.ServerRunnable;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class LightcyclesGameClient extends LightcyclesGame
 {
 
+	public static Client client;
 	public GameScreen gameScreen;
 	String ip;
 	Map<Integer, Character> input_map = new HashMap<>();
@@ -31,8 +33,10 @@ public class LightcyclesGameClient extends LightcyclesGame
 		Gdx.graphics.setWindowedMode(Settings.SCREEN_WIDTH, Settings.SCREEN_HEIGHT);
 
 		List<InputPointer> inpy = new ArrayList<>();
-		inpy.add(new InputPointer('o'));
+		inpy.add(new InputPointer('n'));
 		inpy.add(new InputPointer((char) 0));
+		inpy.add(new InputPointer('n'));
+		inpy.add(new InputPointer('n'));
 		inpy.get(0).input_char = 'y';
 
 		this.gameScreen = new GameScreen(this, inpy);
@@ -40,10 +44,12 @@ public class LightcyclesGameClient extends LightcyclesGame
 
 		Stage stage = this.gameScreen.stage;
 
-		Thread clientThread = new Thread(new ClientRunnable(true, this, ip, stage));
+		this.client = new Client(true, this, ip, inpy);
+
+		Thread clientThread = new Thread(new ClientRunnable(stage, client));
 		clientThread.start();
 
-		LightcycleGameSimulation simulation = new LightcycleGameSimulationClient(gameScreen, input_map, inpy);
+		LightcycleGameSimulation simulation = new LightcycleGameSimulationClient(gameScreen, input_map, inpy, this.client);
 	}
 
 	public void render()
