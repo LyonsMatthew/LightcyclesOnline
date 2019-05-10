@@ -9,6 +9,7 @@ public class DesktopLauncherClient
 {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.forceExit = true;
 		new LwjglApplication(new LightcyclesGameClient(arg[0]), config);
 	}
 }

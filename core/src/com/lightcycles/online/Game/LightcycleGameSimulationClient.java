@@ -89,6 +89,7 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 	{
 		if (new_pos.equals("endendend")) {
 			Gdx.app.exit();
+			System.exit(0);
 		}
 		Lightcycle cycle = this.lightcycles.get(pnum);
 		int old_x = cycle.get_grid_x();
