@@ -92,15 +92,16 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 		int old_y = cycle.get_grid_y();
 		String[] parts = new_pos.split(",");
 		int new_x = Integer.parseInt(parts[0]);
-		int new_y = Integer.parseInt(parts[1].substring(0, parts[1].length()));
+		int new_y = Integer.parseInt(parts[1]);
+		int true_pnum = Integer.parseInt(parts[2].substring(0, parts[2].length()));
 		char move = 'o';
 		if (old_x - new_x == 1) move = 'l';
 		else if (old_x - new_x == -1) move = 'r';
 		else if (old_y - new_y == 1) move = 'd';
 		else if (old_y - new_y == -1) move = 'u';
-		input_map.put(pnum, move);
-		lightcycles.get(pnum).set_action(move);
-		if (client.player_num == pnum) client.last_direction = move;
+		input_map.put(true_pnum, move);
+		lightcycles.get(true_pnum).set_action(move);
+		if (client.player_num == true_pnum) client.last_direction = move;
 	}
 
 	public void checkDeath(int player_num)

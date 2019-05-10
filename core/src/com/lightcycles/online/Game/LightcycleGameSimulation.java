@@ -133,7 +133,7 @@ public class LightcycleGameSimulation extends Actor
 			try {
 				for (Socket cs : this.clientSockets) {
 					System.out.println(lightcycle.grid_y);
-					cs.getOutputStream().write((lightcycle.grid_x + "," + lightcycle.grid_y + "\n").getBytes());
+					cs.getOutputStream().write((lightcycle.grid_x + "," + lightcycle.grid_y + "," + lightcycle.player_num + "\n").getBytes());
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
