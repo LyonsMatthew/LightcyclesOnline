@@ -98,6 +98,7 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 		else if (old_x - new_x == -1) move = 'r';
 		else if (old_y - new_y == 1) move = 'd';
 		else if (old_y - new_y == -1) move = 'u';
+		System.out.println(move + " " + (old_y) + " " + (new_y));
 		input_map.put(pnum, move);
 		lightcycles.get(pnum).set_action(move);
 		if (client.player_num == pnum) client.last_direction = move;

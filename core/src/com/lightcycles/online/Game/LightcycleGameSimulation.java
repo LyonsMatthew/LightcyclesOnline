@@ -132,6 +132,7 @@ public class LightcycleGameSimulation extends Actor
 			checkDeath(lightcycle.get_player_num());
 			try {
 				for (Socket cs : this.clientSockets) {
+					System.out.println(lightcycle.grid_y);
 					cs.getOutputStream().write((lightcycle.grid_x + "," + lightcycle.grid_y + "\n").getBytes());
 				}
 			} catch (IOException e) {
