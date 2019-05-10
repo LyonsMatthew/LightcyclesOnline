@@ -92,13 +92,12 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 		int old_y = cycle.get_grid_y();
 		String[] parts = new_pos.split(",");
 		int new_x = Integer.parseInt(parts[0]);
-		int new_y = Integer.parseInt(parts[1].substring(parts[1].length()-1));
+		int new_y = Integer.parseInt(parts[1].substring(0, parts[1].length()));
 		char move = 'o';
 		if (old_x - new_x == 1) move = 'l';
 		else if (old_x - new_x == -1) move = 'r';
 		else if (old_y - new_y == 1) move = 'd';
 		else if (old_y - new_y == -1) move = 'u';
-		System.out.println(move + " " + (old_y) + " " + (new_y));
 		input_map.put(pnum, move);
 		lightcycles.get(pnum).set_action(move);
 		if (client.player_num == pnum) client.last_direction = move;
