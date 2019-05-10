@@ -191,7 +191,7 @@ public class LightcycleGameSimulation extends Actor
 				}
 			}
 			try {
-				sleep(5000);
+				sleep(10000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
