@@ -155,6 +155,6 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 		int new_y = Integer.parseInt(parts[1].substring(parts[1].length()-1));
 		cycle.grid_x = new_x;
 		cycle.grid_y = new_y;
-		paths[new_y][new_x-1] = pnum;
+		//paths[new_y][new_x-1] = pnum;
 	}
 }
