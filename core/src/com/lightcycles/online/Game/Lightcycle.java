@@ -52,6 +52,7 @@ public class Lightcycle extends Actor
 
 	public void set_position()
 	{
+		this.direction = this.next_action;
 		this.setPosition(this.grid_x * Settings.SCREEN_WIDTH / Settings.GRID_WIDTH,
 				this.grid_y * Settings.SCREEN_HEIGHT / Settings.GRID_HEIGHT);
 	}

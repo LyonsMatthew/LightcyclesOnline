@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 
 public class LightcycleGameSimulation extends Actor
@@ -182,6 +183,19 @@ public class LightcycleGameSimulation extends Actor
 		}
 		if (living_cycle_count == 1) {
 			System.out.println("IT'S ALL OVER FOLKS");
+			for (Socket cs : this.clientSockets) {
+				try {
+					cs.getOutputStream().write(("endendend" + "\n").getBytes());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			exit(0);
 		}
 	}
 

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 
 public class LightcycleGameSimulationClient extends LightcycleGameSimulation
@@ -86,6 +87,9 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 
 	private void move_based_on_input(int pnum, String new_pos)
 	{
+		if (new_pos.equals("endendend\n")) {
+			exit(0);
+		}
 		Lightcycle cycle = this.lightcycles.get(pnum);
 		int old_x = cycle.get_grid_x();
 		int old_y = cycle.get_grid_y();
@@ -94,10 +98,10 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 		int new_y = Integer.parseInt(parts[1]);
 		int true_pnum = Integer.parseInt(parts[2].substring(0, parts[2].length()));
 		char move = 'o';
-		if (old_x - new_x == 1) move = 'l';
-		else if (old_x - new_x == -1) move = 'r';
-		else if (old_y - new_y == 1) move = 'd';
-		else if (old_y - new_y == -1) move = 'u';
+		if (old_x - new_x >= 1) move = 'l';
+		else if (old_x - new_x <= -1) move = 'r';
+		else if (old_y - new_y >= 1) move = 'd';
+		else if (old_y - new_y <= -1) move = 'u';
 		input_map.put(true_pnum, move);
 		lightcycles.get(true_pnum).set_action(move);
 		lightcycles.get(true_pnum).grid_x = new_x;
