@@ -33,8 +33,8 @@ public class Lightcycle extends Actor
 		this.setWidth(Settings.SCREEN_WIDTH / Settings.GRID_WIDTH);
 		this.setHeight(Settings.SCREEN_HEIGHT / Settings.GRID_HEIGHT);
 
-		this.grid_x = Settings.GRID_WIDTH/2 + player_num * 6 * (player_num%2*-1);
-		this.grid_y = Settings.GRID_HEIGHT/2;
+		this.grid_x = 3 + player_num * 5;
+		this.grid_y = 7;
 
 //		Random random = new Random();
 //		this.grid_x = random.nextInt(Settings.GRID_WIDTH);

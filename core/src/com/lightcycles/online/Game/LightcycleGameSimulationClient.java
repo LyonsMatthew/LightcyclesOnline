@@ -138,6 +138,7 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 		{
 			try {
 				String new_pos = buff.readLine();
+				System.out.println(new_pos);
 				set_pos_based_on_input(l.player_num, new_pos);
 				input_map.put(l.player_num, 'r');
 			} catch (IOException e) {
