@@ -42,7 +42,7 @@ public class Lightcycle extends Actor
 
 		this.set_position();
 
-		this.color = new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), (float)Math.random());
+		this.color = new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f+(float)Math.random()/2);
 	}
 
 	public int get_player_num()
