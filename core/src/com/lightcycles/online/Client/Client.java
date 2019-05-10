@@ -66,16 +66,16 @@ public class Client extends Actor
 		if (isDead) return;
 		try {
 			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				if (last_direction == 'r' || last_direction == 'l') return;
+				//if (last_direction == 'r' || last_direction == 'l') return;
 				socket.getOutputStream().write("r\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				if (last_direction == 'd' || last_direction == 'u') return;
+//				if (last_direction == 'd' || last_direction == 'u') return;
 				socket.getOutputStream().write("d\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-				if (last_direction == 'l' || last_direction == 'r') return;
+//				if (last_direction == 'l' || last_direction == 'r') return;
 				socket.getOutputStream().write("l\n".getBytes());
 			} else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				if (last_direction == 'u' || last_direction == 'd') return;
+//				if (last_direction == 'u' || last_direction == 'd') return;
 				socket.getOutputStream().write("u\n".getBytes());
 			}
 		} catch (IOException e) {

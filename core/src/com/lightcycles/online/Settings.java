@@ -12,5 +12,5 @@ public class Settings
 
 	public static float TICK_LENGTH = 0.3f;
 
-	public static float GAME_START_DElAY = 1.f;
+	public static float GAME_START_DElAY = 10.f;
 }
