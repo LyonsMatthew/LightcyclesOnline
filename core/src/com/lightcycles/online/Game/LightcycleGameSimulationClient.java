@@ -77,7 +77,7 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 				move_based_on_input(pnum, new_pos);
 				int old_x = lightcycles.get(pnum).grid_x;
 				int old_y = lightcycles.get(pnum).grid_y;
-				lightcycles.get(pnum).move();
+//				lightcycles.get(pnum).move();
 				paths[old_y][old_x] = pnum;
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -101,6 +101,9 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 		else if (old_y - new_y == -1) move = 'u';
 		input_map.put(true_pnum, move);
 		lightcycles.get(true_pnum).set_action(move);
+		lightcycles.get(true_pnum).grid_x = new_x;
+		lightcycles.get(true_pnum).grid_y = new_y;
+		lightcycles.get(true_pnum).set_position();
 		if (client.player_num == true_pnum) client.last_direction = move;
 	}
 
