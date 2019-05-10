@@ -88,6 +88,8 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 	private void move_based_on_input(int pnum, String new_pos)
 	{
 		if (new_pos.equals("endendend")) {
+			System.out.println("IT'S ALL OVER FOLKS");
+			System.out.println("The error message is a feature :)");
 			Gdx.app.exit();
 			System.exit(0);
 		}
