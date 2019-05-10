@@ -10,7 +10,7 @@ public class Settings
 	public static int GRID_WIDTH = 40;
 	public static int GRID_HEIGHT = 30;
 
-	public static float TICK_LENGTH = 0.6f;
+	public static float TICK_LENGTH = 0.1f;
 
 	public static float GAME_START_DElAY = 10.f;
 }
