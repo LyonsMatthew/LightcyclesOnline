@@ -74,9 +74,9 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 		{
 			try {
 				String new_pos = buff.readLine();
-				move_based_on_input(pnum, new_pos);
 				int old_x = lightcycles.get(pnum).grid_x;
 				int old_y = lightcycles.get(pnum).grid_y;
+				move_based_on_input(pnum, new_pos);
 //				lightcycles.get(pnum).move();
 				paths[old_y][old_x] = pnum;
 			} catch (IOException e) {
