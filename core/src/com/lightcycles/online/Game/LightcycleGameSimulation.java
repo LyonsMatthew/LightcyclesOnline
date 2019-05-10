@@ -195,7 +195,7 @@ public class LightcycleGameSimulation extends Actor
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			exit(0);
+			Gdx.app.exit();
 		}
 	}
 

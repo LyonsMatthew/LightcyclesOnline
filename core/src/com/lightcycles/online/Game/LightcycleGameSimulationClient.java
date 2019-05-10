@@ -88,7 +88,7 @@ public class LightcycleGameSimulationClient extends LightcycleGameSimulation
 	private void move_based_on_input(int pnum, String new_pos)
 	{
 		if (new_pos.equals("endendend")) {
-			exit(0);
+			Gdx.app.exit();
 		}
 		Lightcycle cycle = this.lightcycles.get(pnum);
 		int old_x = cycle.get_grid_x();
