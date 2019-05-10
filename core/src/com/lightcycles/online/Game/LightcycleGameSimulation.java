@@ -127,6 +127,7 @@ public class LightcycleGameSimulation extends Actor
 			}
 			int old_x = lightcycle.get_grid_x();
 			int old_y = lightcycle.get_grid_y();
+			checkDeath(lightcycle.get_player_num());
 			lightcycle.move();
 			paths[old_y][old_x] = lightcycle.get_player_num();
 			checkDeath(lightcycle.get_player_num());
@@ -172,16 +173,16 @@ public class LightcycleGameSimulation extends Actor
 
 	public void checkEndGame()
 	{
-//		int living_cycle_count;
-//		for (Lightcycle lightcycle : this.lightcycles)
-//		{
-//			if (!lightcycle.is_dead) {
-//				living_cycle_count++;
-//			}
-//		}
-//		if (living_cycle_count == 1) {
-//			System.out.println("IT'S ALL OVER FOLKS");
-//		}
+		int living_cycle_count = 0;
+		for (Lightcycle lightcycle : this.lightcycles)
+		{
+			if (!lightcycle.is_dead) {
+				living_cycle_count++;
+			}
+		}
+		if (living_cycle_count == 1) {
+			System.out.println("IT'S ALL OVER FOLKS");
+		}
 	}
 
 	public void addPlayers()
